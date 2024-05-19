@@ -1,0 +1,19 @@
+server:
+  port: 18080
+
+spring:
+  application:
+    name: cloud-client
+  config:
+    import: "optional:nacos:${spring.application.name}"
+
+  cloud:
+    nacos:
+      discovery:
+        group: DEFAULT_GROUP
+        namespace: cloud-project
+        server-addr: 127.0.0.1:8848
+      config:
+        group: DEFAULT_GROUP
+        namespace: cloud-project
+        server-addr: 127.0.0.1:8848
