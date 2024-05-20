@@ -11,6 +11,7 @@
     <modules>
         <module>cloud-gateway</module>
         <module>clound-client</module>
+        <module>cloud-client-v2</module>
     </modules>
 
     <name>cloud2024</name>

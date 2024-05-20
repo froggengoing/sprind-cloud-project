@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: cloud-client-v2
+  profiles:
+    active: dev
