@@ -1,0 +1,29 @@
+spring:
+  #  config:
+  ##    :${spring.application.name}
+  #    import: "optional:nacos:"
+#  .${spring.cloud.nacos.config.fileExtension}
+  config:
+    import: nacos:${spring.application.name}-${spring.profiles.active}
+  cloud:
+    nacos:
+      config:
+        fileExtension: yml
+        group: DEFAULT_GROUP
+        namespace: cloud-project
+        server-addr: 127.0.0.1:8848
+      discovery:
+        group: DEFAULT_GROUP
+        namespace: cloud-project
+        server-addr: 127.0.0.1:8848
+    gateway:
+      routes:
+        - id: cloud-client
+          uri: lb://cloud-client
+          predicates:
+            - Path=/user/**
+          filters:
+            - StripPrefix=1
+logging:
+  level:
+    root: info
