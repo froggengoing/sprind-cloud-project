@@ -16,6 +16,7 @@ public class HiFeignCallBack implements HiFeign {
     @Override
     public List<SysRole> hello(Integer userId) {
         System.out.println("fallback");
+        System.out.println("fallback thread：" + Thread.currentThread().getName());
         return Collections.EMPTY_LIST;
     }
 }

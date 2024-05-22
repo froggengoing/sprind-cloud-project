@@ -1,5 +1,6 @@
 package com.froggengo.cloud.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.froggengo.cloud.model.SysRole;
 import com.froggengo.cloud.model.SysUser;
 import com.froggengo.cloud.rpc.HiFeign;
@@ -24,9 +25,16 @@ public class HelloController {
     int port;
 
     @GetMapping("/hello/{userId}")
+    @SentinelResource("hot-hello")
     public SysUser hello(@PathVariable("userId") Integer userId) {
+        System.out.println("请求参数：" + userId);
         if (userId == null) {
             return new SysUser();
+        }
+        // 出发熔断sentinel异常
+        if (userId == 112) {
+            System.out.println("触发熔断+" + userId);
+            throw new RuntimeException("触发熔断");
         }
         List<SysRole> roleList = hiFeign.hello(userId);
         SysUser sysUser = new SysUser();

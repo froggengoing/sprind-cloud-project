@@ -23,6 +23,13 @@ public class HelloController {
         if (userId == null) {
             return Collections.EMPTY_LIST;
         }
+        if(userId==110){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
         SysRole sysRole = new SysRole();
         sysRole.setId(userId);
         sysRole.setRoleName("admin");
