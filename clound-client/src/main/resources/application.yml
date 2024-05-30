@@ -1,7 +1,80 @@
+# 完整的 server tomcat 配置
 server:
   port: 18080
+  tomcat:
+    # 配置 Tomcat 运行日志和临时文件的目录。若不配置，则默认使用系统的临时目录。
+    basedir: "tomcat"
+    accesslog:
+      # 开启访日日志记录
+      enabled: true
+    # 此连接器在接受连接后等待显示请求 URI 行的毫秒数。使用值 -1 表示无（即无限）超时。默认值为 60000（即 60 秒），但请注意，Tomcat 附带的标准server.xml将其设置为 20000（即 20 秒）。除非 disableUploadTimeout 设置为 false ，否则在读取请求正文（如果有）时也会使用此超时。
+    connection-timeout: 30s
+    # 在关闭连接之前等待另一个 HTTP 请求的时间。如果未设置，则使用 connectionTimeout。设置为 -1 时，不会超时。
+    keep-alive-timeout: 10s
+    accept-count: 100
+    max-connections: 8192
+    max-http-form-post-size: 2MB
+    max-http-response-header-size: 8KB
+    max-keep-alive-requests: 100
+    max-swallow-size: 2MB
+    additional-tld-skip-patterns: "*.tld"
+    background-processor-delay: 10
+    processor-cache: 200
+    uri-encoding: utf-8
+    use-relative-redirects: true
+    redirect-context-root: true
+    # URI 路径中应允许的其他未编码字符的逗号分隔列表。只允许使用“< > [ \ ] ^ ' { | }”。
+    relaxed-path-chars:
+      - "|"
+      - "{"
+    # URI 查询字符串中应允许的其他未编码字符的逗号分隔列表。只允许使用“< > [ \ ] ^ ' { | }”。
+    relaxed-query-chars:
+      - "|"
+      - "{"
+    mbeanregistry:
+      enabled: true
 
+    remoteip:
+      host-header: "X-Forwarded-Host"
+      internal-proxies: "10.10.10.10"
+      port-header: "X-Forwarded-Port"
+      protocol-header: "X-Forwarded-Proto"
+      protocol-header-https-value: "https"
+      remote-ip-header: "X-Forwarded-For"
+      trusted-proxies: "10.10.10.10"
+    resource:
+      allow-caching: true
+      cache-ttl: 3600
+    threads:
+      min-spare: 10
+      max: 200
+
+
+
+
+
+  #    mbeanregistry:
+#      enabled: true
+
+#server:
+#  port: 18080
+#  tomcat:
+#    mbeanregistry:
+#      enabled: true
+#    max-connections: 40
+#    accept-count: 10
+#    threads:
+#      max: 60
+#      min-spare: 10
+#    max-http-form-post-size: 10MB
+
+#  tomcat:
+#    max-threads: 200
+#    min-spare-threads: 10
+#    accept-count: 100
 spring:
+  jmx:
+    enabled: true
   application:
     name: cloud-client
   config:
@@ -12,14 +85,32 @@ spring:
       discovery:
         group: DEFAULT_GROUP
         namespace: cloud-project
-        server-addr: 127.0.0.1:8848
+        server-addr: 172.24.136.195:8848
       config:
         group: DEFAULT_GROUP
         namespace: cloud-project
-        server-addr: 127.0.0.1:8848
+        server-addr: 172.24.136.195:8848
     sentinel:
       transport:
         dashboard: 172.24.136.195:8858
+
+management:
+  endpoints:
+    jmx:
+      exposure:
+        include: "*"
+    web:
+      exposure:
+        include: "*"
+        exclude: "heapdump,threaddump,refresh"
+      base-path: "/actuator"
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+
+
+
 feign:
   sentinel:
     enabled: true
