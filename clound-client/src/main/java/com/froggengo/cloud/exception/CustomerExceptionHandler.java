@@ -25,6 +25,7 @@ public class CustomerExceptionHandler {
     @ResponseBody
     public String handleException(Exception e) {
         System.out.println("global exception：" + e.getMessage());
+        e.printStackTrace();
         //e.printStackTrace();
         JSONObject resultObj = new JSONObject();
         resultObj.put("code", 100);

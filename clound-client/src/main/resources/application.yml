@@ -11,9 +11,9 @@ server:
     connection-timeout: 30s
     # 在关闭连接之前等待另一个 HTTP 请求的时间。如果未设置，则使用 connectionTimeout。设置为 -1 时，不会超时。
     keep-alive-timeout: 10s
-    accept-count: 100
-    max-connections: 8192
-    max-http-form-post-size: 2MB
+    accept-count: 10
+    max-connections: 40
+    max-http-form-post-size: 100
     max-http-response-header-size: 8KB
     max-keep-alive-requests: 100
     max-swallow-size: 2MB
@@ -26,11 +26,11 @@ server:
     # URI 路径中应允许的其他未编码字符的逗号分隔列表。只允许使用“< > [ \ ] ^ ' { | }”。
     relaxed-path-chars:
       - "|"
-      - "{"
+      - "["
     # URI 查询字符串中应允许的其他未编码字符的逗号分隔列表。只允许使用“< > [ \ ] ^ ' { | }”。
     relaxed-query-chars:
       - "|"
-      - "{"
+      - "["
     mbeanregistry:
       enabled: true
 
@@ -73,6 +73,11 @@ server:
 #    min-spare-threads: 10
 #    accept-count: 100
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 1KB
+      max-request-size: 100
   jmx:
     enabled: true
   application:

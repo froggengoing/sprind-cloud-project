@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author fly
@@ -23,7 +24,7 @@ import java.util.List;
  **/
 @RestController
 public class HelloController {
-    static String UPLOAD_FOLDER = System.getProperty("user.dir") + "/upload";
+    static String UPLOAD_FOLDER = System.getProperty("user.dir") + "/upload/";
     @Autowired
     HiFeign hiFeign;
 
@@ -54,6 +55,27 @@ public class HelloController {
     @GetMapping("/loadBalance")
     public Integer hello() {
         return port;
+    }
+
+    @GetMapping("/loadBa|lance")
+    public Integer helloChart() {
+        return port;
+    }
+
+    @GetMapping("/loadBa]lance")
+    public Integer helloChart2() {
+        return port;
+    }
+
+    @GetMapping("/loadBa[lance")
+    public Integer helloChart3() {
+        return port;
+    }
+
+    @PostMapping("/post-body-max")
+    public Map<String, Object> postBodyMax(@RequestBody Map<String, Object> body) {
+        System.out.println("post-body-max:" + body);
+        return body;
     }
 
     @GetMapping("/thread-block")
