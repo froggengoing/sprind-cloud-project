@@ -115,7 +115,9 @@ management:
 
 
 
-
 feign:
   sentinel:
     enabled: true
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [${spring.application.name:app}] [%thread] %-5level [%c{1}:%L] - %msg%n"

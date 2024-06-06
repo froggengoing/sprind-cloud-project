@@ -8,12 +8,12 @@ spring:
       config:
         group: DEFAULT_GROUP
         namespace: cloud-project
-        server-addr: 127.0.0.1:8848
+        server-addr: 172.24.136.195:8848
         file-extension: yml
       discovery:
         group: DEFAULT_GROUP
         namespace: cloud-project
-        server-addr: 127.0.0.1:8848
+        server-addr: 172.24.136.195:8848
 logging:
   level:
-    root: trace
+    root: info
